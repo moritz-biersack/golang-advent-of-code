@@ -11,7 +11,7 @@ go run day<day_number>/main.go --part <1 or 2> --input <input_file>
 ## Testing
 
 ```bash
-go test ./day<day_number>
+go test ./day<day_number>  # consider the dot
 ```
 
 ## Learnings
@@ -51,6 +51,27 @@ To decompose a string with space separated values, use `fmt.Sscanf`.
 ```go
 var a, b int
 _, err := fmt.Sscanf(line, "%d %d", &a, &b)
+```
+
+### Day 2
+
+#### Parsing strings to int
+
+To parse a string to an int, use `strconv.Atoi`.
+
+```go
+strconv.Atoi("123")
+```
+
+#### Popping elements from a slice
+
+To pop an element from a slice, use the following pattern.
+Without copying the original slice, it the original slice is modified.
+
+```go
+c := make([]string, len(original))
+copy(c, levels)
+removedOne := append(c[:i], c[i+1:]...)
 ```
 
 ## References
