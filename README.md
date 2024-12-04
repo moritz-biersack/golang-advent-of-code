@@ -74,6 +74,22 @@ copy(c, levels)
 removedOne := append(c[:i], c[i+1:]...)
 ```
 
+### Day 3
+
+#### Regex
+
+To use regex, use the `regexp` package.
+
+```go
+r := regexp.MustCompile(`(?s)(?:do\(\)|^)(.*?)(?:don't\(\)|$)`)
+matches := r.FindAllStringSubmatch(input, -1)
+```
+
+The `(?s)` flag is used to make `.` match newlines.
+`All` in `FindAllStringSubmatch` is used to find all matches.
+`Submatch` is used to get the matched groups.
+
+
 ## References
 
 Project structure based on [alexchao26/advent-of-code-go](https://github.com/alexchao26/advent-of-code-go).
