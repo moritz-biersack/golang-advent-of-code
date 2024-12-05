@@ -89,6 +89,28 @@ The `(?s)` flag is used to make `.` match newlines.
 `All` in `FindAllStringSubmatch` is used to find all matches.
 `Submatch` is used to get the matched groups.
 
+### Day 4
+
+#### Slicing strings
+
+If the string is containing ASCII only, it can be treated as a slice of bytes.
+
+```go
+reversed := make([]byte, len(subString))
+copy(reversed, subString)
+slices.Reverse(reversed)
+```
+
+In case it would contain unicode, one can convert to `[]rune` first.
+
+```go
+runes := []rune(someString)
+```
+
+#### Double-check off-by-one errors
+
+Always make sure to double-check your lengths and limits.
+
 
 ## References
 
