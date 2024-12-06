@@ -4,9 +4,20 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"slices"
 	"strings"
 )
+
+const word = "XMAS"
+var directions = [8][2]int{
+	{-1, -1},
+	{-1, 0},
+	{-1, 1},
+	{0, 1},
+	{1, 1},
+	{1, 0},
+	{1, -1},
+	{0, -1},
+}
 
 func main() {
 	var part int
@@ -31,83 +42,37 @@ func main() {
 	}
 }
 
-func checkForward(subString string) int {
-	if subString == "XMAS" {
-		return 1
-	}
-	return 0
-}
-
-func checkBackward(subString string) int {
-	reversed := make([]byte, len(subString))
-	copy(reversed, subString)
-	slices.Reverse(reversed)
-	reversedString := string(reversed)
-	
-	return checkForward(reversedString)
-}
-
-func checkDown(lines []string, x int, y int) int {
-	var subString = make([]byte, 4)
-	for i := range 4 {
-		subString[i] = lines[y+i][x]
-	}
-	count := 0
-	count += checkForward(string(subString))
-	count += checkBackward(string(subString))
-
-	return count
-}
-
-func checkDownRight(lines []string, x int, y int) int {
-	var subString = make([]byte, 4)
-	for i := range 4 {
-		subString[i] = lines[y+i][x+i]
-	}
-	count := 0
-	count += checkForward(string(subString))
-	count += checkBackward(string(subString))
-
-	return count
-}
-
-func checkUpRight(lines []string, x int, y int) int {
-	var subString = make([]byte, 4)
-	for i := range 4 {
-		subString[i] = lines[y-i][x+i]
-	}
-	count := 0
-	count += checkForward(string(subString))
-	count += checkBackward(string(subString))
-
-	return count
-}
-
 func part1(input string) int {
 	lines := strings.Split(input, "\n")
 	count := 0
 	for y:=0; y<len(lines); y++ {
 		line := lines[y]
-		xLimit := len(line) - 3
-		yLimit := len(lines) - 3
 		for x:=0; x<len(line); x++ {
-			if x < xLimit{
-				subString := line[x:x+4]
-				count += checkForward(subString)
-				count += checkBackward(subString)
-				if y >= 3 {
-					count += checkUpRight(lines, x, y)
-				}
-				if y < yLimit {
-					count += checkDownRight(lines, x, y)
-				}
+			if line[x] != 'X' {
+				continue
 			}
-			if y < yLimit {
-				count += checkDown(lines, x, y)
+			for _, dir := range directions {
+				dy, dx := dir[0], dir[1]
+				charsMatching := true
+				for i := range len(word) {
+					cy := y + dy*i
+					cx := x + dx*i
+					if cy < 0 || cx < 0 || cy >= len(lines) || cx >= len(line) {
+						charsMatching = false
+						break
+					}
+					c := lines[cy][cx]
+					if c != word[i] {
+						charsMatching = false
+						break
+					}
+				}
+				if charsMatching {
+					count++
+				}
 			}
 		}
 	}
-
 	return count
 }
 

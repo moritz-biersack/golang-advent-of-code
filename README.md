@@ -111,6 +111,9 @@ runes := []rune(someString)
 
 Always make sure to double-check your lengths and limits.
 
+#### Constant array
+
+An array can not be defined as a constant.
 
 ## References
 
