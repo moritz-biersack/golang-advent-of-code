@@ -9,18 +9,6 @@ import (
 	"strings"
 )
 
-const word = "XMAS"
-var directions = [8][2]int{
-	{-1, -1},
-	{-1, 0},
-	{-1, 1},
-	{0, 1},
-	{1, 1},
-	{1, 0},
-	{1, -1},
-	{0, -1},
-}
-
 func main() {
 	var part int
 	var inputpath string
